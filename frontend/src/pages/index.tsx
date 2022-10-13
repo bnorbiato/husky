@@ -11,9 +11,9 @@ import api from "../services/axios/api";
 
 type User = {
 	id: string;
-	name: string;
-	email: string;
-	created_at: string;
+	firstName: string;
+	lastName: string;
+	primaryEmail: string;
 }
 
 const Users = () => {
@@ -87,12 +87,12 @@ const Users = () => {
 											<Td>
 												<Box>
 													<Link color="purple.400" onMouseEnter={() => handlePrefetchData(user.id)}>
-														<Text fontWeight="bold">{user.name}</Text>
+														<Text fontWeight="bold">{user.firstName}</Text>
 													</Link>
-													<Text fontSize="sm" color="gray.300">{user.email}</Text>
+													<Text fontSize="sm" color="gray.300">{user.firstName}</Text>
 												</Box>
 											</Td>
-											{isWideVersion && <Td>{user.created_at}</Td>}
+											{isWideVersion && <Td>{user.firstName}</Td>}
 											{isWideVersion && (<Td>
 												<Button
 													as="a"

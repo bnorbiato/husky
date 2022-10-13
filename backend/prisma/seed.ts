@@ -5,12 +5,12 @@ const prisma = new PrismaClient();
 async function main() {
   console.log(`Start seeding ...`);
 
-  const users = await prisma.user.createMany({
+  const person = await prisma.person.createMany({
     data: [
       {
         firstName: "Chovy",
         lastName: "Geng",
-        primaryEmail: "chovy@email.com"
+        email: "chovy@email.com"
       },
     ],
   });
@@ -18,10 +18,8 @@ async function main() {
   await prisma.contact.createMany({
     data: [
       {
-        userId: 1,
-        type: "Instagram",
-        content: "@chovy",
-        position: 1
+        personId: 1,
+        name: "Faker",
       },
     ],
   });

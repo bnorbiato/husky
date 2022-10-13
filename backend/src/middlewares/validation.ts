@@ -4,16 +4,16 @@ import { Request, Response, NextFunction } from 'express';
 const prisma = new PrismaClient();
 
 export const validateName = (req: Request, res:Response, next: NextFunction) => {
-  const { name } = req.body;
-  if (typeof name !== 'string') {
+  const { firstName } = req.body;
+  if (typeof firstName !== 'string') {
     return res.status(400).json({ message: 'Name must be a string' });
   }
 
-  if (!name) {
+  if (!firstName) {
     return res.status(400).json({ message: 'Name is required' });
   }
 
-  if (name.length < 3) {
+  if (firstName.length < 3) {
     return res.status(400).json(
       { message: 'Name length must be at least 3 characters long' },
     );
@@ -27,10 +27,10 @@ export const isEmailValid = (email: string) => {
   return base.test(email);
 };
 
-export const isEmailUnique = async (primaryEmail: string) => {
-  const found = await prisma.user.findUnique({
+export const isEmailUnique = async (email: string) => {
+  const found = await prisma.person.findUnique({
     where: {
-      primaryEmail,
+      email,
     },
   });
   return found === null;
@@ -54,15 +54,15 @@ export const validateEmail = async (req: Request, res:Response, next: NextFuncti
   next();
 };
 
-export const isUser = async (req: Request, res: Response, next: NextFunction) => {
-  const { primaryEmail } = req.params;
-  const user = await prisma.user.findUnique({
+export const isPerson = async (req: Request, res: Response, next: NextFunction) => {
+  const { email } = req.params;
+  const person = await prisma.person.findUnique({
     where: {
-      primaryEmail,
+      email,
     },
   });
 
-  if (!user) {
+  if (!person) {
     return res.status(404).json({ message: 'User not found' });
   }
 

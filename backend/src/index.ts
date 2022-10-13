@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Successfully connected to api server." });
 });
 
-app.use('/users', routes);
+app.use('/person', routes);
 
 app.use('/api', routes);
 
