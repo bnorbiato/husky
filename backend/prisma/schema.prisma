@@ -9,9 +9,9 @@ datasource db {
 
 model User {
   id    Int     @default(autoincrement()) @id 
-  firstName  String?
-  lastName  String?
-  primaryEmail String? @unique
+  firstName  String
+  lastName  String
+  primaryEmail String @unique
   contacts Contact[]
 }
 

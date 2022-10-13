@@ -2,30 +2,27 @@ import express from "express";
 
 import { 
     getAllUsers,
-    getUserById,
+    getUser,
     createUser,
-    getUserByName,
-    deleteUserById,
-    updateUserById 
+    updateUser,
+    deleteUser
 } from "../../controllers/users";
 import {
     isUser,
     validateEmail,
-    validateName,
+    validateName
   } from '../../middlewares/validation';
 
 const routes = express.Router();
 
 routes.get('/', getAllUsers);
 
-routes.get('/search', getUserByName);
+routes.get('/:primaryEmail', getUser, isUser);
 
-routes.get('/:id', isUser, getUserById);
+routes.post('/', validateEmail, validateName, createUser);
 
-routes.post('/add-user', validateEmail, validateName, createUser);
+routes.put('/:primaryEmail', isUser, validateName, updateUser);
 
-routes.put('/:id', isUser, validateName, updateUserById);
-
-routes.delete('/:id', isUser, deleteUserById);
+routes.delete('/:primaryEmail', isUser, deleteUser);
 
 export default routes;

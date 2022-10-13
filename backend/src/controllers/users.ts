@@ -1,43 +1,24 @@
-import express from "express";
+import { PrismaClient } from '@prisma/client';
+import { Request, Response } from 'express';
 
-import db from "../db";
+const prisma = new PrismaClient();
 
-export const getAllUsers = async (
-  req: express.Request,
-  res: express.Response
-) => {
-  const users = await db.user.findMany({
+export const getAllUsers = async (_req: Request, res: Response) => {
+  const users = await prisma.user.findMany({
     select: {
       id: true,
       firstName: true,
       lastName: true,
-      primaryEmail: true,
+      primaryEmail: true
     },
   });
-
+  
   return res.status(200).json(users);
 };
 
-export const getUserById = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
-  const userId = id ? parseInt(id) : 0;
-
-  try {
-    const user = await db.user.findUnique({
-      where: {
-        id: userId,
-      },
-    });
-
-    return res.status(200).json({ user });
-  } catch (error) {
-    return res.status(400).json({ error: "User not found." });
-  }
-};
-
-export const createUser = async (req: express.Request, res: express.Response) => {
+export const createUser = async (req: Request, res: Response) => {
   const { firstName, lastName, primaryEmail } = req.body;
-  const created = await db.user.create({
+  const created = await prisma.user.create({
     data: {
       firstName,
       lastName,
@@ -47,48 +28,40 @@ export const createUser = async (req: express.Request, res: express.Response) =>
   return res.status(201).json(created);
 };
 
-export const getUserByName = async (req: express.Request, res: express.Response) => {
-  const { searchString }: { searchString?: string} = req.query;
+export const getUser = async (req: Request, res: Response) => {
+  const { primaryEmail } = req.params;
 
-  const filteredPosts = await db.user.findMany({
+  const user = await prisma.user.findUnique({
     where: {
-      firstName: {
-        contains: searchString,
-        mode: 'insensitive',
-      },
-    },
+      primaryEmail,
+    }
   });
-
-  return res.status(200).json(filteredPosts);
+  return res.status(200).json(user);
 };
 
-export const deleteUserById = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
-  const userId = id ? parseInt(id) : 0;
+export const updateUser = async (req: Request, res: Response) => {
+  const { primaryEmail } = req.params;
+  const { firstName, lastName } = req.body;
 
-  await db.user.delete({
+  const user = await prisma.user.update({
     where: {
-      id: userId,
-    },
-  });
-  return res.status(204).end();
-};
-
-export const updateUserById = async (req: express.Request, res: express.Response) => {
-  const { id } = req.params;
-  const userId = id ? parseInt(id) : 0;
-  const { firstName, lastName, primaryEmail } = req.body;
-
-  const user = await db.user.update({
-    where: {
-      id: userId,
+      primaryEmail,
     },
     data: {
       firstName,
       lastName,
-      primaryEmail
     },
   });
 
   return res.status(200).json(user);
+};
+
+export const deleteUser = async (req: Request, res: Response) => {
+  const { primaryEmail } = req.params;
+  await prisma.user.delete({
+    where: {
+      primaryEmail,
+    },
+  });
+  return res.status(204).end();
 };

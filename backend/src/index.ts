@@ -22,7 +22,9 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Successfully connected to api server." });
 });
 
-app.use("/api", routes);
+app.use('/users', routes);
+
+app.use('/api', routes);
 
 const server = app.listen(config.appPort, () => {
   Logger.debug(`Server is up and running @ http://localhost:${config.appPort}`);
