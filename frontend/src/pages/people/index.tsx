@@ -14,13 +14,14 @@ import {
 import { RiAddLine, RiRefreshLine } from "react-icons/ri";
 import { useMutation } from "react-query";
 
-import { Header } from "../components/Header";
-import { Sidebar } from "../components/Sidebar";
-import { PeopleTable } from "../components/Tables/People";
+import { Header } from "../../components/Header";
+import { Pagination } from "../../components/Pagination";
+import { Sidebar } from "../../components/Sidebar";
+import { PeopleTable } from "../../components/Tables/People";
 
-import { usePeople } from "../store/hooks/people";
-import { api } from "../services/api";
-import { queryClient } from "../services/queryClient";
+import { usePeople } from "../../store/hooks/people";
+import { api } from "../../services/api";
+import { queryClient } from "../../services/queryClient";
 
 const spin = keyframes`
   from { 
@@ -103,7 +104,16 @@ export default function PersonList() {
 				</NextLink>
 			  </Flex>
 			</Flex>
-
+  
+			{isLoading ? (
+			  <Flex justify="center">
+				<Spinner />
+			  </Flex>
+			) : error ? (
+			  <Flex justify="center">
+				<Text>Falha ao obter dados dos usuários.</Text>
+			  </Flex>
+			) : (
 			  <>
 				<PeopleTable people={data.people} deletePerson={deletePerson} />
   
@@ -114,6 +124,7 @@ export default function PersonList() {
 				  currentPage={page}
 				/> */}
 			  </>
+			)}
 		  </Box>
 		</Flex>
 	  </Box>
