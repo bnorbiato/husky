@@ -1,7 +1,13 @@
 import { useQuery, UseQueryOptions } from "react-query";
 
 import { api } from "../../services/api";
-import { Person } from "../types";
+
+interface Person {
+  id: number;
+  name: string;
+  email: string;
+  createdAt: string;
+}
 
 interface GetPeopleResponseProps {
   person: Person;
@@ -9,7 +15,7 @@ interface GetPeopleResponseProps {
 
 interface UsePersonParams {
   id: number;
-  token: string;
+  email: string;
 }
 
 export async function getPerson(id: number): Promise<GetPeopleResponseProps> {
@@ -26,7 +32,7 @@ export function usePerson(
   id: number,
   options?: UseQueryOptions<GetPeopleResponseProps>
 ) {
-  return useQuery(["user", id], () => getPerson(id), {
+  return useQuery(["person", id], () => getPerson(id), {
     staleTime: 1000 * 60 * 10,
     ...options
   });

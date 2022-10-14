@@ -21,7 +21,12 @@ import {
 } from "@chakra-ui/react";
 import { RiDeleteBin2Line, RiPencilLine } from "react-icons/ri";
 
-import { Person } from "../../../store/types";
+interface Person {
+  id: number;
+  name: string;
+  email: string;
+  createdAt: string;
+}
 
 interface PersonItemProps {
   person: Person;
@@ -55,7 +60,7 @@ export function PersonItem({
           <Popover onOpen={() => {}}>
             <PopoverTrigger>
               <Link color="purple.400">
-                <Text fontWeight="bold">{person.firstName}</Text>
+                <Text fontWeight="bold">{person.name}</Text>
               </Link>
             </PopoverTrigger>
             <PopoverContent
@@ -95,7 +100,7 @@ export function PersonItem({
                     >
                       Nome completo
                     </Text>
-                    <Text>{person.firstName}</Text>
+                    <Text>{person.name}</Text>
                   </Flex>
                   <Flex align="center" w="100%" justify="space-between">
                     <NextLink href={`users/update/${person.id}`}>

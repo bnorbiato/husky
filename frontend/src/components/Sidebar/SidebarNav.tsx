@@ -8,7 +8,7 @@ export const SidebarNav = () => {
     return (
         <Stack spacing="12" align="flex-start">
             <NavSection>
-                <NavLink icon={RiContactsLine} href="/">Usuários</NavLink>
+                <NavLink icon={RiContactsLine} href="/people">Usuários</NavLink>
             </NavSection>
         </Stack>
     )

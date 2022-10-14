@@ -13,9 +13,15 @@ import {
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { UseMutationResult } from "react-query";
 
-import { PersonItem } from "./Person";
-import { Person } from "../../../store/types";
+import { PersonItem } from "./PersonItem";
 /* import { DeleteModal } from "../../Users/DeleteModal"; */
+
+interface Person {
+  id: number;
+  name: string;
+  email: string;
+  createdAt: string;
+}
 
 interface PeopleTableProps {
   people: Person[];
@@ -34,17 +40,17 @@ export function PeopleTable({ people, deletePerson }: PeopleTableProps) {
 
   function handleChangeSelectAllCheckbox(ev: ChangeEvent<HTMLInputElement>) {
     if (ev.target.checked) {
-        setSelectedPeopleToDelete([...people.map(person => person.id)]);
+      setSelectedPeopleToDelete([...people.map(person => person.id)]);
     } else {
-        setSelectedPeopleToDelete([]);
+      setSelectedPeopleToDelete([]);
     }
   }
 
   function handleChangeCheckbox(checked: boolean, id: number) {
     if (checked) {
-        setSelectedPeopleToDelete(prevValues => [...prevValues, id]);
+      setSelectedPeopleToDelete(prevValues => [...prevValues, id]);
     } else {
-        setSelectedPeopleToDelete(prevValues =>
+      setSelectedPeopleToDelete(prevValues =>
         prevValues.filter(value => value !== id)
       );
     }
@@ -105,7 +111,7 @@ export function PeopleTable({ people, deletePerson }: PeopleTableProps) {
         <Tbody>
           {people.map(item => (
             <PersonItem
-              key={item.id}
+              key={item.email}
               person={item}
               isChecked={isChecked}
               onChangeCheckbox={handleChangeCheckbox}

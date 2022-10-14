@@ -1,7 +1,13 @@
 import { useQuery, UseQueryOptions } from "react-query";
 
 import { api } from "../../services/api";
-import { Person } from "../types";
+
+interface Person {
+  id: number;
+  name: string;
+  email: string;
+  createdAt: string;
+}
 
 interface GetPeopleResponseProps {
   people: Person[];
@@ -24,9 +30,13 @@ export async function getPeople(
   const people: Person[] = data.person.map((person: Person) => {
     return {
       id: person.id,
-      firstName: person.firstName,
-      lastName: person.lastName,
+      name: person.name,
       email: person.email,
+      createdAt: new Date(person.createdAt).toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      })
     };
   });
 
