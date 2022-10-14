@@ -24,7 +24,7 @@ O husky é um app para cadastro de pessoas e contatos.
 - Rode o comando `npx ts-node src/index.ts`
 - Para melhor visualizar os models, rode o comando `npx prisma studio`
 
-## 🚀 Como executar o backend
+## 🚀 Como executar o frontend
 - Acesse a pasta do frontend com `cd frontend`
 - Instale as dependências do front com `yarn`
 - Rode o comando `yarn run build`
