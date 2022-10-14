@@ -8,25 +8,31 @@ datasource db {
 }
 
 model Person {
-  id        Int       @id @default(autoincrement())
-  firstName String
-  lastName  String
-  email     String    @unique
-  contacts  Contact[]
+  id       String    @id @default(cuid())
+  name     String
+  email    String    @unique
+  contacts Contact[]
 }
 
 model Contact {
-  id       Int    @id @default(autoincrement())
-  name     String
-  person   Person @relation(fields: [personId], references: [id])
-  personId Int
-  types    Type[]
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  name      String   @unique
+  Person    Person   @relation(fields: [person], references: [id])
+  person    String
+  types     Type[]
+
+  @@index([person], name: "person")
 }
 
 model Type {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
   title     String
   content   String
-  Contact   Contact? @relation(fields: [contactId], references: [id])
-  contactId Int?
+  updatedAt DateTime @default(now())
+  Contact   Contact? @relation(fields: [contact], references: [id])
+  contact   String
+
+  @@index([contact], name: "contact")
 }

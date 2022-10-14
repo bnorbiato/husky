@@ -4,16 +4,16 @@ import { Request, Response, NextFunction } from 'express';
 const prisma = new PrismaClient();
 
 export const validateName = (req: Request, res:Response, next: NextFunction) => {
-  const { firstName } = req.body;
-  if (typeof firstName !== 'string') {
+  const { name } = req.body;
+  if (typeof name !== 'string') {
     return res.status(400).json({ message: 'Name must be a string' });
   }
 
-  if (!firstName) {
+  if (!name) {
     return res.status(400).json({ message: 'Name is required' });
   }
 
-  if (firstName.length < 3) {
+  if (name.length < 3) {
     return res.status(400).json(
       { message: 'Name length must be at least 3 characters long' },
     );

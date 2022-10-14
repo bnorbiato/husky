@@ -8,18 +8,8 @@ async function main() {
   const person = await prisma.person.createMany({
     data: [
       {
-        firstName: "Chovy",
-        lastName: "Geng",
+        name: "Chovy",
         email: "chovy@email.com"
-      },
-    ],
-  });
-
-  await prisma.contact.createMany({
-    data: [
-      {
-        personId: 1,
-        name: "Faker",
       },
     ],
   });

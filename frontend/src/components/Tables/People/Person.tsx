@@ -23,7 +23,7 @@ import { RiDeleteBin2Line, RiPencilLine } from "react-icons/ri";
 
 import { Person } from "../../../store/types";
 
-interface PersonProps {
+interface PersonItemProps {
   person: Person;
   isChecked: (id: number) => boolean;
   onChangeCheckbox: (checked: boolean, id: number) => void;
@@ -35,7 +35,7 @@ export function PersonItem({
   isChecked,
   onChangeCheckbox,
   onDelete
-}: PersonProps) {
+}: PersonItemProps) {
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false);
   const isWideVersion = useBreakpointValue<boolean>({
     base: false,

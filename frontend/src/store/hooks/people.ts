@@ -1,4 +1,3 @@
-import { GetServerSidePropsContext } from "next";
 import { useQuery, UseQueryOptions } from "react-query";
 
 import { api } from "../../services/api";
@@ -10,8 +9,7 @@ interface GetPeopleResponseProps {
 }
 
 export async function getPeople(
-  page: number,
-  ctx: GetServerSidePropsContext = undefined
+  page: number
 ): Promise<GetPeopleResponseProps> {
 
   const { data, headers } = await api.get("person", {

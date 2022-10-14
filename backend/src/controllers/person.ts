@@ -7,9 +7,9 @@ export const getPeople = async (_req: Request, res: Response) => {
   const people = await prisma.person.findMany({
     select: {
       id: true,
-      firstName: true,
-      lastName: true,
-      email: true
+      name: true,
+      email: true,
+      contacts: true,
     },
   });
   
@@ -17,11 +17,10 @@ export const getPeople = async (_req: Request, res: Response) => {
 };
 
 export const createPerson = async (req: Request, res: Response) => {
-  const { firstName, lastName, email } = req.body;
+  const { name, email } = req.body;
   const created = await prisma.person.create({
     data: {
-      firstName,
-      lastName,
+      name,
       email,
     },
   });
@@ -41,15 +40,14 @@ export const getPerson = async (req: Request, res: Response) => {
 
 export const updatePerson = async (req: Request, res: Response) => {
   const { email } = req.params;
-  const { firstName, lastName } = req.body;
+  const { name, lastName } = req.body;
 
   const user = await prisma.person.update({
     where: {
       email,
     },
     data: {
-      firstName,
-      lastName,
+      name,
     },
   });
 
